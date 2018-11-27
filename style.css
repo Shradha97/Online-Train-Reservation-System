@@ -1,0 +1,62 @@
+<style type="text/css">
+body{
+	margin: 0 auto;
+	background-image: url("railway.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 720px;
+}
+
+.login_page{
+	width: 500px;
+	height: 350px;
+	text-align: center;
+	margin: 0 auto;
+	background-color: rgb(169,180,180,0.7);
+	margin-top: 160px;
+	margin-bottom: 100px;
+}
+
+.signup_page{
+	width: 500px;
+	height: 600px;
+	padding: 10px 20px;
+	text-align: center;
+	margin: 0 auto;
+	background-color: rgb(169,180,180,0.7);
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.big_box{
+	padding: 12px 20px;
+	margin-top: 30px;
+	height: 25px;
+	width: 300px;
+	font-size: 18px;
+	margin-bottom:20px;
+	border-radius: 4px;
+}
+
+.small_box{
+	padding: 12px 20px;
+	margin-top: 30px;
+	height: 20px;
+	width: 200px;
+	font-size: 18px;
+	margin-bottom:20px;
+	border-radius: 4px;
+}
+
+.btn_login{
+	padding: 10px 20px;
+	border: none;
+	background-color: #008CBA;
+	color: white;
+}
+
+.btn_signup{
+	border: none;
+	background-color: rgb(0,0,0,0.0);
+	color: red;
+}
+</style>
