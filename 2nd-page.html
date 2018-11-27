@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" a href="2nd_page_style.css">
+<script>
+var x1;
+var x2;
+var x3;
+var tmp;
+function firstPlace(str)
+{
+	x1=str;
+}
+function second(str)
+{
+	x2=str;
+}
+function showTrain(str)
+{
+	var day=new Array(7);
+            day[0]="sun";
+            day[1]="mon";
+            day[2]="tue";
+            day[3]="wed";
+            day[4]="thu";
+            day[5]="fri";
+            day[6]="sat";
+     
+            x3=day[tmp];
+	
+	var xmlhttp=new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function(){
+	if(this.readyState == 4 && this.status == 200)
+	{
+		document.getElementById("phpfile").innerHTML = this.responseText;
+	}
+	};
+	xmlhttp.open("GET","index.php?fs="+x1+"&ts="+x2+"&d="+x3,true);
+	xmlhttp.send();
+	
+	
+	
+	
+}
+function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, language)
+{
+
+  function leading_zeros(str, lng)
+  {
+    
+    if(lng == null)
+      lng = 2;
+
+    var str = str.toString();
+
+    while(str.length < lng)
+      str = '0' + str;
+
+    return str;
+  }
+
+  function returnDays(date)
+  {
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var days = 31;
+
+    if( month == 3 || month == 5 || month == 8 || month == 10 ){
+      days = 30;
+    }
+    else if(month == 1){
+      days = 28;
+
+      if(year % 4 == 0){
+        days = 29;
+
+        if(year % 100 == 0){
+          days = 28;
+
+          if(year % 400 == 0){
+            days = 29;
+          }
+        }
+      }
+    }
+
+    return(days);
+  }
+
+  function returnLastMonth(date)
+  {
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var dt = new Date();
+
+    month --;
+
+    if(month == -1){
+      month = 11;
+      year --;
+    }
+
+    dt.setYear(year);
+    dt.setDate(1);
+    dt.setMonth(month);
+
+    return dt;
+  }
+
+  function returnNextMonth(date)
+  {
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var dt = new Date();
+
+    month ++;
+
+    if(month == 12){
+      month = 0;
+      year ++;
+    }
+
+    dt.setYear(year);
+    dt.setDate(1);
+    dt.setMonth(month);
+
+    return dt;
+  }
+
+  function return_month_name(date)
+  {
+  
+        var month = new Array('January', 'February', 'March', 'April', 'May', 'June', 
+          'July', 'August', 'September', 'October', 'November', 'December');
+       
+     
+    
+    return month[date.getMonth()];
+  }
+
+  this.setto = function(eng_date)
+  {
+    // input text
+    if(type == 1)
+      document.getElementById(text_to).value = eng_date;
+    // span, div ...
+    if(type == 2)
+      document.getElementById(text_to).innerHTML = eng_date;
+  }
+
+  this.write_calendar = function(date)
+  {
+    var nb_days_last_month = 0;
+    var cnt_days = 0;
+    var days_month = 0;
+    var str = new String();
+    var style = new String();
+    var next_month = new Date();
+    var last_month = new Date();
+    var today = new Date();
+
+    var date = new Date(date);
+    var last_year = new Date(date);
+    var next_year = new Date(date);
+
+    date.setDate(1);                // le premier du mois
+    next_month = returnNextMonth(date);        // le mois prcdent
+    last_month = returnLastMonth(date);        // le mois suivant
+    nb_days_last_month = returnDays(last_month);  // nombre jours mois prcdent
+    cnt_days = -date.getDay()+1;          // compteur de jours, part le dimanche du dbut du mois
+    days_month = returnDays(date);          // nombre de jours mois slectionn
+    str = '';                    // forge la chane de caractres  mettre dans la div
+
+    next_year.setYear(date.getFullYear() + 1);    // anne prcdente
+    last_year.setYear(date.getFullYear() - 1);    // anne suivante
+
+
+    str += '<table cellspacing="0" cellpadding="0" border="1" width="250" bgcolor="white">';
+
+    str += '<tr>';
+    str += ' <td colspan="1" align="left"><a href="' + "javascript:" + 
+      obj_name + ".write_calendar('" + eval(last_year) + "')" + ';"><--</a></td>';
+ 
+    str += ' <td colspan="1" align="left"><a href="' + "javascript:" + 
+      obj_name + ".write_calendar('" + eval(last_month) + "')" + '"><-</a></td>';
+
+    
+    str += ' <td colspan="3" align="center">' 
+    str += return_month_name(date) + ' ' + date.getFullYear();
+    str += ' </td>';
+
+    
+    str += ' <td colspan="1" align="right"><a href="' + "javascript:" + 
+      obj_name + ".write_calendar('" + eval(next_month) + "')" + '">-></a></td>';
+    
+    str += ' <td colspan="1" align="right"><a href="' + "javascript:" + 
+      obj_name + ".write_calendar('" + eval(next_year) + "')" + '">--></a></td>';
+    str += '</tr>';
+
+   
+    var cnt_semaines = 0;
+
+    while(cnt_semaines < 6){
+      cnt_semaines ++;
+  
+      str += ' <tr>';
+
+      for(var cnt = 0; cnt < 7; cnt++){
+        
+        
+        if(cnt_days > days_month){  
+          day = cnt_days - days_month;
+          month = next_month.getMonth() + 1;
+          year = next_month.getFullYear();
+
+          style = "font-size:10px;font-color:red";
+        }
+        
+        else if(cnt_days < 1){
+          day = cnt_days + nb_days_last_month;
+          month = last_month.getMonth() + 1;
+          year = last_month.getFullYear();
+
+          style = "font-size:10px;";
+
+        }
+        // mous slectionn
+        else{
+          var d1 = new Date();
+          var d2 = new Date();
+
+          d1.setMonth(date.getMonth());
+          d1.setYear(date.getFullYear());
+          d1.setDate(cnt_days);
+
+          day = cnt_days;
+          month = date.getMonth() + 1;
+          year = date.getFullYear();
+
+      
+          if(d1.getFullYear() == d2.getFullYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate() ){
+            style = "font-size:18px;font-color:red";
+            tmp=d1.getDay();
+          }
+          else{
+            style = "font-size:18px;";
+          }
+        }
+		
+        dstr = leading_zeros(day)+ '/' + leading_zeros(month) + '/' + year ;
+
+        str += '  <td width="14%">';
+        str += '  <span style="' + style + '">';
+        str += '  <a href="javascript:' + obj_name + '.setto(\'' +  dstr  + '\')">';
+        str += day;
+        str += '  </a>';
+        str += '  </font>';
+        str += '  </td>';
+
+        cnt_days ++;
+      }
+
+      str += ' </tr>';
+    }
+
+    str += '</table>';
+    document.getElementById(layer_name).innerHTML = str;
+  }
+
+  this.show = function()
+  {
+    if(hide_self)
+      document.getElementById(layer_name).style.visibility = 'visible';
+  }
+
+  this.hide = function()
+  {
+    if(hide_self)
+      document.getElementById(layer_name).style.visibility = 'hidden';
+  }
+
+
+  document.write('<div id="' + layer_name + '" onmouseout="' + obj_name + '.hide();">...</div>');
+  this.write_calendar(new Date());
+}
+
+
+
+</script>
+
+</head>
+	
+	
+<body>
+	<div id="phpfile">
+		<form id="details">
+		<div class="tab_date_tog">	
+			<div class= "travel_place">
+				<div class = "box" >	
+				<select name="from_place" style="width:200px; "  onchange="firstPlace(this.text)">
+					<option value="0" >From Place</option>
+					<option value="1">vijaywada</option>
+					<option value="2">chennai</option>
+					<option value="3">tirupati</option>
+				</select>
+				</div>
+				<div class="box" >
+				<select name="To_place" style="width:200px;" change="SecondPlace(this.text)">
+					<option value="0"  >To Place</option>
+					<option value="1">vijaywada</option>
+					<option value="2">chennai</option>
+					<option value="3">tirupati</option>
+				</select>
+				</div>
+				<div>
+				<input type="button" value="plan" style="float:centre;" onclick="showtrtain()" class="btn">
+				</div>
+			</div>
+
+<!--align="right" width="200" height="200"-->
+<div class="calendar">
+<table id="01">
+ 	<tr>
+  	<td width=100%>choose date</td>
+ 	</tr>
+ 	
+ 	<tr>
+ 	<td><div id='aaa'>&nbsp;</div></td>
+ 	</tr>
+ 	
+ 	<tr>
+  	<td><script>var a = new free_date_picker('a', 'date_picker_a', 'aaa', 2, false, 'en');</script></td>
+ 	</tr>
+</table>
+</div>
+</div>
+
+<div class="booking">
+<p>Booking Information</p>
+<table id="02">
+<tr>
+	<td><input name="passenger name" type="text" placeholder="Passenger Name" class="in"></td>
+	<td><input name="age" type="text" placeholder="Age" class="in"></td>
+	<td><button type="button" onclick="myfunc()"class="btn">+</button></td>
+	<td><input type="checkbox"></td>
+</tr>
+</div>
+<script>
+var count=0;
+
+function myfunc()
+{
+	count++;
+	var tab=document.getElementById("02");
+	var row=tab.insertRow(count);
+	var col1=row.insertCell(0);
+	var col2=row.insertCell(1);
+	var col3=row.insertCell(2);
+	var col4=row.insertCell(3);
+	col1.innerHTML='<input name="passenger name" type="text" placeholder="Passenger Name" class="in">';
+	col2.innerHTML='<input name="age" type="text" placeholder="Age" class="in">';
+	col3.innerHTML='<button type="button" onclick="myfunc()" class="btn">+</button>';
+	col4.innerHTML='<input type="checkbox">';
+	
+}
+
+</script>
+
+</form>
+</div>
+
+
+
+</body>
+</html>
