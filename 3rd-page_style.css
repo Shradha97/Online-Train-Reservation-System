@@ -1,0 +1,42 @@
+body{
+	margin: 0 auto;
+	background-image: url("railway.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 720px;
+}
+
+
+.box{
+	padding: 12px 20px;
+	margin-top: 20px;
+	height: 25px;
+	width: 300px;
+	font-size: 18px;
+	margin-bottom:20px;
+	border-radius: 4px;
+}
+
+.in{
+	padding: 12px 20px;
+	height: 10px;
+	width: 200px;
+}
+
+.btn{
+	padding: 10px 20px;
+	border: none;
+	background-color: #008CBA;
+	color: white;
+	margin-top:0px;
+}
+
+.data_update{
+	padding: 12px 20px;
+	width: 600px;
+	height: 200px;
+	text-align: center;
+	margin: 0 auto;
+	background-color: rgb(169,180,180,0.7);
+	margin-top: 0px;
+	margin-left: 300px;
+}
