@@ -7,41 +7,39 @@ var x1;
 var x2;
 var x3;
 var tmp;
-function firstPlace(str)
+function fromplace(str1)
 {
-	x1=str;
+	x1=str1;
+	document.getElementById("x11").innerHTML=str1;
 }
-function second(str)
+function toplace(str2)
 {
-	x2=str;
+	x2=str2;
+	document.getElementById("x12").innerHTML=str2;
 }
-function showTrain(str)
+function showtrain()
 {
-	var day=new Array(7);
-            day[0]="sun";
-            day[1]="mon";
-            day[2]="tue";
-            day[3]="wed";
-            day[4]="thu";
-            day[5]="fri";
-            day[6]="sat";
-     
-            x3=day[tmp];
-	
-	var xmlhttp=new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function(){
-	if(this.readyState == 4 && this.status == 200)
+	var dayarray=new Array("sun","mon","tue","wed","thu","fri","sat");
+	var darr=tmp.split("/");
+	var day=eval(darr[0]);
+	var month=eval(darr[1]);
+	var year=eval(darr[2]);
+	var tday=day+(2*month)+parseInt(3*(month+1)/5)+year+parseInt(year/4)-parseInt(year/400)+2;
+	var dayno=(tday%7);
+	if(dayno==0)
 	{
-		document.getElementById("phpfile").innerHTML = this.responseText;
+		dayno=7;
 	}
-	};
-	xmlhttp.open("GET","index.php?fs="+x1+"&ts="+x2+"&d="+x3,true);
-	xmlhttp.send();
+	x3=dayarray[dayno-4];
+	document.getElementById("x13").innerHTML=x3;
+	
+			
 	
 	
 	
 	
 }
+
 function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, language)
 {
 
@@ -145,7 +143,10 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
       document.getElementById(text_to).value = eng_date;
     // span, div ...
     if(type == 2)
+    {
       document.getElementById(text_to).innerHTML = eng_date;
+      tmp=eng_date;
+      }
   }
 
   this.write_calendar = function(date)
@@ -170,7 +171,7 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
     cnt_days = -date.getDay()+1;          // compteur de jours, part le dimanche du dbut du mois
     days_month = returnDays(date);          // nombre de jours mois slectionn
     str = '';                    // forge la chane de caractres  mettre dans la div
-
+	
     next_year.setYear(date.getFullYear() + 1);    // anne prcdente
     last_year.setYear(date.getFullYear() - 1);    // anne suivante
 
@@ -214,6 +215,7 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
           year = next_month.getFullYear();
 
           style = "font-size:10px;font-color:red";
+          //tmp=cnt;
         }
         
         else if(cnt_days < 1){
@@ -240,7 +242,7 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
       
           if(d1.getFullYear() == d2.getFullYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate() ){
             style = "font-size:18px;font-color:red";
-            tmp=d1.getDay();
+            //tmp=cnt;
           }
           else{
             style = "font-size:18px;";
@@ -267,18 +269,7 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
     document.getElementById(layer_name).innerHTML = str;
   }
 
-  this.show = function()
-  {
-    if(hide_self)
-      document.getElementById(layer_name).style.visibility = 'visible';
-  }
-
-  this.hide = function()
-  {
-    if(hide_self)
-      document.getElementById(layer_name).style.visibility = 'hidden';
-  }
-
+  
 
   document.write('<div id="' + layer_name + '" onmouseout="' + obj_name + '.hide();">...</div>');
   this.write_calendar(new Date());
@@ -290,30 +281,22 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
 
 </head>
 	
-	
 <body>
 	<div id="phpfile">
-		<form id="details">
+		<form id="details" action="3rd-page.html">
 		<div class="tab_date_tog">	
 			<div class= "travel_place">
 				<div class = "box" >	
-				<select name="from_place" style="width:200px; "  onchange="firstPlace(this.text)">
-					<option value="0" >From Place</option>
-					<option value="1">vijaywada</option>
-					<option value="2">chennai</option>
-					<option value="3">tirupati</option>
-				</select>
+				<input name="from place" type="text" value="From place" onkeyup="fromplace(this.value)">
 				</div>
 				<div class="box" >
-				<select name="To_place" style="width:200px;" change="SecondPlace(this.text)">
-					<option value="0"  >To Place</option>
-					<option value="1">vijaywada</option>
-					<option value="2">chennai</option>
-					<option value="3">tirupati</option>
-				</select>
+				<input name="to place" type="text" value="To place" onkeyup="toplace(this.value)">
 				</div>
 				<div>
-				<input type="button" value="plan" style="float:centre;" onclick="showtrtain()" class="btn">
+				<input type="button" value="confirm date" style="float:centre;" onclick="showtrain()">
+				</div>
+				<div>
+				<input type="submit" id="button" value="submit">
 				</div>
 			</div>
 
@@ -345,6 +328,8 @@ function free_date_picker(obj_name, layer_name, text_to ,type, hide_self, langua
 	<td><input type="checkbox"></td>
 </tr>
 </div>
+
+
 <script>
 var count=0;
 
@@ -368,7 +353,14 @@ function myfunc()
 
 </form>
 </div>
-
+<?php
+$.ajax({
+	url:'index.php',
+	method:'POST',
+	data:{fs:x1,ts:x2,d=x3},
+	success:
+	});
+?>
 
 
 </body>
