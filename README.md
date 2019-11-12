@@ -1,6 +1,8 @@
-# Train-reservation-system
-This project aims at buiding a dummy train reservation system.
-Similar to the IRCTC website, this website provides basic functionalities like 
+# Online Train Reservation System
+This project aims at buiding a dummy train reservation system similar to IRCTC website.
+
+## Functionalities
+This website provides basic functionalities like:
 1. New and existing user login and registration service.
 2. Administrator login service.
 3. Provides services to book/view trains and their time table respectively, payment service.
