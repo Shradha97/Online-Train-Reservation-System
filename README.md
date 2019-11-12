@@ -2,10 +2,10 @@
 This project aims at buiding a dummy train reservation system similar to IRCTC website.
 
 ## Requirements
-1. Linux as the operating system.
-2. Apache as the web server.
-3. MySQL as the relational database management system.
-4. PHP as the scripting language.
+1. **Linux** as the operating system.
+2. **Apache** as the web server.
+3. **MySQL** as the relational database management system.
+4. **PHP** as the scripting language.
 
 ## Functionalities
 This website provides basic functionalities like:
